@@ -1,79 +1,114 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formularz Raffle</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .form-container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 400px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .success {
-      text-align: center;
-      margin-top: 15px;
-      color: green;
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <title>Rejestracja do Loterii Butów</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #success {
+            margin-top: 15px;
+            color: green;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <div class="form-container">
-    <form id="raffleForm" onsubmit="handleSubmit(event)">
-      <h2>Formularz Raffle</h2>
-      <input type="text" name="first_name" placeholder="Imię" required />
-      <input type="text" name="last_name" placeholder="Nazwisko" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="text" name="address" placeholder="Adres" required />
-      <button type="submit">Wyślij</button>
-      <div class="success" id="successMsg">✅ Zgłoszenie zostało wysłane!</div>
-    </form>
-  </div>
-  <script>
-    function handleSubmit(e) {
-      e.preventDefault();
-      document.getElementById("successMsg").style.display = "block";
-      e.target.reset();
-    }
-  </script>
+
+<h2>Rejestracja do Loterii Butów</h2>
+
+<form id="lotteryForm">
+    <label for="imie">Imię:</label>
+    <input type="text" id="imie" name="imie" required />
+
+    <label for="nazwisko">Nazwisko:</label>
+    <input type="text" id="nazwisko" name="nazwisko" required />
+
+    <label for="adres">Adres:</label>
+    <input type="text" id="adres" name="adres" required />
+
+    <label for="dane">Dane do loterii (np. rozmiar buta, ulubiony kolor):</label>
+    <input type="text" id="dane" name="dane" required />
+
+    <button type="submit">Zapisz się</button>
+</form>
+
+<div id="success"></div>
+
+<script>
+    document.getElementById('lotteryForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Pobierz dane z formularza
+        const imie = document.getElementById('imie').value;
+        const nazwisko = document.getElementById('nazwisko').value;
+        const adres = document.getElementById('adres').value;
+        const dane = document.getElementById('dane').value;
+
+        // Utwórz obiekt z danymi
+        const data = {
+            imie: imie,
+            nazwisko: nazwisko,
+            adres: adres,
+            dane: dane,
+            dataZgloszenia: new Date().toISOString()
+        };
+
+        // Pobierz istniejące zgłoszenia z localStorage
+        let zgłoszenia = JSON.parse(localStorage.getItem('lotteryZgloszenia')) || [];
+
+        // Dodaj nowe zgłoszenie
+        zgłoszenia.push(data);
+
+        // Zapisz z powrotem do localStorage
+        localStorage.setItem('lotteryZgloszenia', JSON.stringify(zgłoszenia));
+
+        // Pokaż komunikat o sukcesie
+        document.getElementById('success').textContent = 'Dane zostały zapisane! Dziękujemy za zgłoszenie.';
+
+        // Wyczyść formularz
+        document.getElementById('lotteryForm').reset();
+    });
+</script>
+
 </body>
 </html>
