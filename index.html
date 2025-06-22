@@ -1,36 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Testowy Formularz Raffle</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formularz Raffle</title>
   <style>
     body {
+      background: #f5f5f5;
       font-family: Arial, sans-serif;
-      background: #f0f2f5;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
     form {
       background: white;
-      padding: 2em;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 300px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
     }
-    input, button {
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
-    #success {
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .success {
+      text-align: center;
+      margin-top: 15px;
       color: green;
       display: none;
-      text-align: center;
     }
   </style>
 </head>
 <body>
   <form id="raffleForm" onsubmit="handleSubmit(event)">
+    <h2>Formularz Raffle</h2>
+    <input type="text" name="first_name" placeholder="Imię" required />
+    <input type="text" name="last_name" placeholder="Nazwisko" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="text" name="address" placeholder="Adres" required />
+    <button type="submit">Wyślij</button>
+    <div class="success" id="successMsg">✅ Zgłoszenie zostało wysłane!</div>
+  </form>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById("successMsg").style.display = "block";
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
